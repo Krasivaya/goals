@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <div class="container">
+      <h1>My Goals</h1>
+      <hr />
+      <div class="row">
+        <div class="col-md-6">
+          <ul>
+            <div *ngFor="let goal of goals; let i = index">
+              <div>
+                <p appStrikethrough>
+                  {{ goal.id }} <b>{{ goal.name }}</b> Released on
+                  <b>{{ goal.completeDate | date | uppercase }}</b>
+                </p>
+                <button (click)="details(i)" class="btn btn-primary">
+                  Click me
+                </button>
+              </div>
+              <div>
+                <app-goal-detail
+                  *ngIf="goal.showDescription"
+                  [goal]="goal"
+                  (isComplete)="deleteGoal($event, i)"
+                ></app-goal-detail>
+              </div>
+            </div>
+          </ul>
+          <p *ngIf="goals.length > 4">Many goals</p>
+        </div>
+        <div class="col-md-6">
+          <app-goal-form (addGoal) = "addNewGoal($event)"></app-goal-form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
