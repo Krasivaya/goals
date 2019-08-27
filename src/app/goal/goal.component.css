@@ -7,9 +7,6 @@ p {
   font-size: 20px;
   padding-top: 20px;
 }
-h1,
-div {
-}
 body {
   background-color: rgb(11, 67, 83);
   color: #fff;
@@ -17,4 +14,9 @@ body {
   width: 100%;
   /* padding: 3px 10px 0px 10px; */
   /* margin-left: -10px; */
+}
+.navbar-brand{font-size: 25px}
+.bg-primary {
+  background-color: rgb(11, 67, 83);
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.589)
 }

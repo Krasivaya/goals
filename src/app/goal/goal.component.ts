@@ -1,5 +1,9 @@
 import { Component, OnInit } from "@angular/core";
+import { HttpClient } from '@angular/common/http';
 import { Goal } from "../goal";
+import { GoalService } from '../goal-service/goal.service';
+import {AlertService} from '../alert-service/alert.service';
+import { Quote } from '../quote-class/quote';
 
 @Component({
   selector: "app-goal",
@@ -7,12 +11,16 @@ import { Goal } from "../goal";
   styleUrls: ["./goal.component.css"]
 })
 export class GoalComponent implements OnInit {
-  goals: Goal[] = [
-    new Goal(1, "Emoji Movie", "Cartoon movie", new Date(2019, 9, 14)),
-    new Goal(2, "ALita", "Marvel movie", new Date(2019, 10, 9)),
-    new Goal(3, "US", "Horror movie", new Date(2019, 11, 14)),
-    new Goal(4, "Men In Black", "Fantasy movie", new Date(2019, 8, 31))
-  ];
+
+  goals:Goal[];
+  alertService: AlertService;
+  quote: Quote;
+
+  constructor(goalService:GoalService, alertService:AlertService, private httpClient) {
+    this.goals = goalService.getGoals()
+    this.alertService = alertService;
+  }
+
   details(index) {
     this.goals[index].showDescription = !this.goals[index].showDescription;
   }
@@ -23,6 +31,7 @@ export class GoalComponent implements OnInit {
       );
       if (toDelete) {
         this.goals.splice(index, 1);
+        this.alertService.alertMe("The goal has been removed")
       }
     }
   }
@@ -33,7 +42,6 @@ export class GoalComponent implements OnInit {
     goal.completeDate = new Date(goal.completeDate);
     this.goals.push(goal);
   }
-  constructor() {}
 
   ngOnInit() {}
 }
