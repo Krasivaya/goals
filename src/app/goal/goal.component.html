@@ -2,23 +2,9 @@
 <html>
   <head></head>
   <body>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="#">Goals</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      
-        <div class="collapse navbar-collapse" id="navbarColor01">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    <div class="container"><br><br>
+    <div class="container">
+      <br><br>
+      <ng-progress></ng-progress>
       <h1>My Goals</h1>
       <hr />
       <div class="row">
@@ -26,24 +12,27 @@
           <ul>
             <div *ngFor="let goal of goals; let i = index">
               <div>
-                <p appStrikethrough>
+                <p id={{i}} appStrikethrough>
                   {{ goal.id }} <b>{{ goal.name }}</b> Released on
                   <b>{{ goal.completeDate | date | uppercase }}</b>
                 </p>
-                <button (click)="details(i)" class="btn btn-primary">
+                <button (click)='goToUrl(goal.id)' class="btn btn-primary">
                   Click me
                 </button>
-              </div>
-              <div>
-                <app-goal-detail
-                  *ngIf="goal.showDescription"
-                  [goal]="goal"
-                  (isComplete)="deleteGoal($event, i)"
-                ></app-goal-detail>
+                <button (click)="goalDelete(true)" class="btn btn-outline-danger">
+                  Already done! <br />
+                  Delete me then!
+                </button>
               </div>
             </div>
           </ul>
           <p *ngIf="goals.length > 4">Many goals</p>
+          <div class="row">
+            <blockquote class="blockquote text-center">
+              <p class="mb-0">{{quote.quote}}</p>
+              <footer class="blockquote-footer"><cite>{{quote.author}}</cite></footer>
+            </blockquote>
+          </div>
         </div>
         <div class="col-md-6">
           <app-goal-form (addGoal) = "addNewGoal($event)"></app-goal-form>
